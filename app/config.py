@@ -10,7 +10,7 @@ if os.getenv("CQLENG_ALLOW_SCHEMA_MANAGEMENT") is None:
 class Settings(BaseSettings):
     proj_name: str = Field(..., env="PROJ_NAME")
     db_client_id: str = Field(..., env="ASTRA_DB_CLIENT_ID")
-    db_client_secret: str = Field(..., env="ASTRA_DB_CLIENT_SECRECT")
+    db_client_secret: str = Field(..., env="ASTRA_DB_CLIENT_SECRET")
 
     class Config:
         env_file = ".env"
