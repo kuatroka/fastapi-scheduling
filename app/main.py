@@ -38,6 +38,7 @@ def products_detail_view(asin):
     events = list(ProductScrapeEvent.objects().filter(asin=asin).limit(5))
     events = [schemas.ProductScrapeEventDetailSchema(**x) for x in events]
     data["events"] = events
+    data["events_url"] = f"/products/{asin}/events"
     return data
 
 
