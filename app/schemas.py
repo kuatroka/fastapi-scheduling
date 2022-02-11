@@ -7,13 +7,13 @@ from . import utils
 class ProductSchema(BaseModel):
     asin: str
     title: Optional[str]
-    price_str: Optional[str]
+    # price_str: Optional[str]
 
 
 class ProductListSchema(BaseModel):
     asin: str
     title: Optional[str]
-    # price_str: Optional[str]
+    price_str: Optional[str]
 
 
 class ProductScrapeEventSchema(BaseModel):
