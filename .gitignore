@@ -1,9 +1,10 @@
-# Byte-compiled / optimized / DLL files
+# unnecessary files
 __pycache__/
-
+app/ignored/
+.env
 
 # Environments
 
 venv/
-.env
-app/ignored/
+
+

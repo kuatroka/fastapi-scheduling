@@ -1,6 +1,6 @@
 from typing import List
 from fastapi import FastAPI
-from . import (config, db, models, schemas)
+from . import (config, db, models, schemas, crud)
 from cassandra.cqlengine.management import sync_table
 
 settings = config.get_settings()
@@ -32,12 +32,23 @@ def products_list_view():
     return list(Product.objects.all())
 
 
+@app.post("/events/scrape")
+def events_scrape_create_view(data: schemas.ProductListSchema):
+    product, _ = crud.add_scrape_event(data.dict())
+    return product
+
+
 @app.get("/products/{asin}")
 def products_detail_view(asin):
     data = dict(Product.objects.get(asin=asin))
-    events = list(ProductScrapeEvent.objects().filter(asin=asin))
-    events = [
-        schemas.schemas.ProductScrapeEventDetailSchema(**x) for x in events
-    ]
+    events = list(ProductScrapeEvent.objects().filter(asin=asin).limit(5))
+    events = [schemas.ProductScrapeEventDetailSchema(**x) for x in events]
     data["events"] = events
+    data["events_url"] = f"/products/{asin}/events"
     return data
+
+
+@app.get("/products/{asin}/events",
+         response_model=List[schemas.ProductScrapeEventDetailSchema])
+def products_scrapes_list_view(asin):
+    return list(ProductScrapeEvent.objects().filter(asin=asin))

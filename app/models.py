@@ -2,7 +2,7 @@ from operator import index
 from cassandra.cqlengine import columns
 from cassandra.cqlengine.models import Model
 
-data = {"asin": "AMZNIDNUMBER3", "title": "Mark 1"}
+data = {"asin": "AMZNIDNUMBER", "title": "Mark 1"}
 
 
 class Product(Model):  # -> table
